@@ -46,7 +46,9 @@ INSTALLED_APPS = [
     'drf_yasg',
     'rest_framework',
     'rest_framework_simplejwt',
-    'user'
+    'user',
+    'vouchers',
+    'enquiry',
 ]
 
 MIDDLEWARE = [
