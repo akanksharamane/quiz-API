@@ -31,7 +31,7 @@ class VoucherViewSet(ModelViewSet):
         """
         try:
             voucher_objs = Voucher.objects.all()
-            serializer = self.get_serializer(voucher_objs, many=True) 
+            serializer = self.get_serializer(voucher_objs, many = True) 
 
             return Response({
                 'status': status.HTTP_200_OK,
@@ -54,7 +54,7 @@ class VoucherViewSet(ModelViewSet):
         - APIException: If an internal server error occurs.
         """
         try:
-            serializer = self.get_serializer(data=request.data)
+            serializer = self.get_serializer(data = request.data)
             if not serializer.is_valid():
                 print(serializer.errors)
                 return Response({
@@ -113,7 +113,7 @@ class VoucherViewSet(ModelViewSet):
         """
         try:
             voucher_obj = self.get_object()
-            serializer = self.get_serializer(voucher_obj, data=request.data, partial=False)
+            serializer = self.get_serializer(voucher_obj, data = request.data, partial = False)
 
             if not serializer.is_valid():
                 print(serializer.errors)
@@ -137,7 +137,7 @@ class VoucherViewSet(ModelViewSet):
                 'status': APIException.status_code
             })
 
-    def partial_update(self, request, pk=None):
+    def partial_update(self, request, pk = None):
         """
         Update specific fields of a voucher.
 
@@ -148,7 +148,7 @@ class VoucherViewSet(ModelViewSet):
         """
         try:
             voucher_obj = self.get_object()
-            serializer = self.get_serializer(voucher_obj, data=request.data, partial=True)
+            serializer = self.get_serializer(voucher_obj, data = request.data, partial = True)
 
             if not serializer.is_valid():
                 print(serializer.errors)

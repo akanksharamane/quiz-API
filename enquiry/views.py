@@ -107,7 +107,7 @@ class EnquiryViewSet(ModelViewSet):
                 'status': APIException.status_code
             })
 
-    def update(self, request, pk=None):
+    def update(self, request, pk = None):
         """
         Update all fields of an enquiry.
 
@@ -118,7 +118,7 @@ class EnquiryViewSet(ModelViewSet):
         """
         try:
             enquiry_objs = self.get_object()
-            serializer = self.get_serializer(enquiry_objs, data=request.data, partial=False)
+            serializer = self.get_serializer(enquiry_objs, data = request.data, partial = False)
 
             if not serializer.is_valid():
                 print(serializer.errors)
@@ -142,7 +142,7 @@ class EnquiryViewSet(ModelViewSet):
                 'status': APIException.status_code
             })
 
-    def partial_update(self, request, pk=None):
+    def partial_update(self, request, pk = None):
         """
         Update specific fields of an enquiry.
 
@@ -153,7 +153,7 @@ class EnquiryViewSet(ModelViewSet):
         """
         try:
             voucher_obj = self.get_object()
-            serializer = self.get_serializer(voucher_obj, data=request.data, partial=True)
+            serializer = self.get_serializer(voucher_obj, data = request.data, partial = True)
 
             if not serializer.is_valid():
                 print(serializer.errors)
