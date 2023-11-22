@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'user',
     'vouchers',
     'enquiry',
+    'exams'
 ]
 
 MIDDLEWARE = [
