@@ -1,6 +1,4 @@
 from django.shortcuts import render
-
-# Create your views here.
 from rest_framework.viewsets import ModelViewSet
 from .models import Feedback
 from .serializers import FeedbacksSerializer
@@ -19,19 +17,13 @@ class FeedbacksViewSet(ModelViewSet):
 
 
     def get_serializer_class(self):
-        # if self.action == 'list':
-        #     return AuthorSerializer
-        # elif self.action == 'create':
-        #     return AuthorSerializer
-        # elif self.action == 'upload_image':
-        #     return AuthorImageSerializer
         return self.serializer_class
 
     #get all Feedback
-    def list(self,request):
+    def list(self, request):
         try:
             feedbacks_objs = Feedbacks.objects.all()
-            serializer = self.get_serializer(courses_objs, many = True)
+            serializer = self.get_serializer(feedbacks_objs, many = True)
 
             return Response({
                 'status':status.HTTP_200_OK,
@@ -46,7 +38,7 @@ class FeedbacksViewSet(ModelViewSet):
             })
 
     #add Feedback
-    def create(self,request):
+    def create(self, request):
         try:
             serializer = self.get_serializer(data=request.data)
 
@@ -123,7 +115,7 @@ class FeedbacksViewSet(ModelViewSet):
 
     #update specific fields
 
-    def partial_update(self,request, pk=None):
+    def partial_update(self, request, pk=None):
         try:
             
             feedbacks_objs = self.get_object()
@@ -152,7 +144,7 @@ class FeedbacksViewSet(ModelViewSet):
             })
 
     # delete Course
-    def destroy(self, request,pk):
+    def destroy(self, request, pk):
         try:
             id=pk
             feedbacks_obj = self.get_object()
