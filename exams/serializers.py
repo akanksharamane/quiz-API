@@ -2,6 +2,7 @@ from rest_framework import serializers
 from .models import Exam
 
 class ExamSerializer(serializers.ModelSerializer):
+    
     #specify model name & field inside meta class
     class Meta:
         model = Exam
