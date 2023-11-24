@@ -51,7 +51,8 @@ INSTALLED_APPS = [
     'branches',
     'courses',
     'exams',
-    'questions'
+    'questions',
+    'students'
 ]
 
 MIDDLEWARE = [
