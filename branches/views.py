@@ -1,6 +1,4 @@
 from django.shortcuts import render
-
-# Create your views here.
 from rest_framework.viewsets import ModelViewSet
 from .models import Branches
 from .serializers import BranchesSerializer
@@ -16,7 +14,6 @@ class BranchesViewSet(ModelViewSet):
     serializer_class=BranchesSerializer
     authentication_classes=[JWTAuthentication]
     permission_classes=[permissions.IsAuthenticated]
-
 
     def get_serializer_class(self):
         return self.serializer_class
@@ -146,7 +143,7 @@ class BranchesViewSet(ModelViewSet):
             })
 
     # delete Branch
-    def destroy(self, request ,pk):
+    def destroy(self, request, pk):
         try:
             id=pk
             branches_obj = self.get_object()
