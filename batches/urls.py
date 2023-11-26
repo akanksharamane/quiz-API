@@ -3,7 +3,7 @@ from rest_framework.routers import DefaultRouter
 from .views import BatchesViewSet
 
 router = DefaultRouter()
-router.register('',BatchesViewSet , basename='batches')
+router.register('', BatchesViewSet, basename='batches')
 app_name = 'batches'
 
 urlpatterns = [

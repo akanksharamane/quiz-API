@@ -10,16 +10,15 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 
 # Create your views here.
 class BatchesViewSet(ModelViewSet):
-    queryset=Batches.objects.all()
-    serializer_class=BatchesSerializer
-    authentication_classes=[JWTAuthentication]
-    permission_classes=[permissions.IsAuthenticated]
-
+    queryset = Batches.objects.all()
+    serializer_class = BatchesSerializer
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
 
     def get_serializer_class(self):
         return self.serializer_class
 
-    #get all Batches
+    #get all batches
     def list(self, request):
         try:
             batches_objs = Batches.objects.all()
@@ -37,7 +36,7 @@ class BatchesViewSet(ModelViewSet):
                 'status': APIException.status_code
             })
 
-    #add Batches
+    #add batches
     def create(self, request):
         try:
             serializer = self.get_serializer(data=request.data)
@@ -64,7 +63,7 @@ class BatchesViewSet(ModelViewSet):
                 'status': APIException.status_code
             })
 
-    # get single Batches
+    # get single batches
     def retrieve(self, request, pk = None):
         try:
             id = pk
@@ -84,7 +83,7 @@ class BatchesViewSet(ModelViewSet):
                 'status': APIException.status_code
             })
 
-    #update all fields of Batch
+    #update all fields of batch
     def update(self, request, pk=None):
         try:
             
@@ -114,12 +113,11 @@ class BatchesViewSet(ModelViewSet):
             })
 
     #update specific fields
-
     def partial_update(self, request, pk=None):
         try:
             
             batches_objs = self.get_object()
-            serializer = self.get_serializer(batches_objs, data=request.data ,partial = True)
+            serializer = self.get_serializer(batches_objs, data=request.data, partial = True)
 
             if not serializer.is_valid():
                 print(serializer.errors)
@@ -144,7 +142,7 @@ class BatchesViewSet(ModelViewSet):
             })
 
     # delete Batch
-    def destroy(self, request ,pk):
+    def destroy(self, request, pk):
         try:
             id=pk
             batches_obj = self.get_object()

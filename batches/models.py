@@ -1,5 +1,6 @@
 from django.db import models
 from courses.models import Courses
+
 # Create your models here.
 class Batches(models.Model):
 
