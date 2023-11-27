@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from .serializers import StudentSerializer
-from . models import Student
+from .serializers import EnquirySerializer
+from .models import Enquiry
 from rest_framework.viewsets import ModelViewSet
 from rest_framework import status
 from rest_framework.exceptions import APIException
@@ -9,20 +9,20 @@ from rest_framework import permissions
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
 # Create your views here.
-class StudentViewset(ModelViewSet):
-    queryset = Student.objects.all()
-    serializer_class = StudentSerializer
+class EnquiryViewset(ModelViewSet):
+    queryset = Enquiry.objects.all()
+    serializer_class = EnquirySerializer
     authentication_classes = [JWTAuthentication]
     permission_classes = [permissions.IsAuthenticated]
 
     def get_serializer_class(self):
         return self.serializer_class
 
-    #get all student details
+    #get all enquiry details
     def list(self,request):
         try:
-            student_objs = Student.objects.all()
-            serializer = self.get_serializer(student_objs, many = True)
+            enquiry_objs = Enquiry.objects.all()
+            serializer = self.get_serializer(enquiry_objs, many = True)
 
             return Response({
                 'status':status.HTTP_200_OK,
@@ -36,7 +36,7 @@ class StudentViewset(ModelViewSet):
                 'status': APIException.status_code
             })
 
-    #add student detail
+    #add enquiry detail
     def create(self,request):
         try:
             serializer =self.get_serializer(data=request.data)
@@ -53,7 +53,7 @@ class StudentViewset(ModelViewSet):
             return Response({
                 'status':status.HTTP_201_CREATED,
                 'data': serializer.data,
-                'messaage':'Student detail added successfully'
+                'messaage':'Enquiry detail added successfully'
             })
 
         except Exception as e:
@@ -63,13 +63,13 @@ class StudentViewset(ModelViewSet):
                 'status': APIException.status_code
             })
 
-    # get single student detail
+    # get single enquiry detail
     def retrieve(self,request,pk=None):
         try:
             id = pk
             if id is not None:
-                student_obj = self.get_object()
-                serializer = self.get_serializer(student_obj)
+                enquiry_obj = self.get_object()
+                serializer = self.get_serializer(enquiry_obj)
 
             return Response({
                 'status':status.HTTP_200_OK,
@@ -83,11 +83,11 @@ class StudentViewset(ModelViewSet):
                 'status': APIException.status_code
             })
 
-    #update all fields of student detail
+    #update all fields of enquiry detail
     def update(self,request,pk=None):
         try:
-            student_objs = self.get_object()
-            serializer = self.get_serializer(student_objs, data=request.data, partial=False)
+            enquiry_objs = self.get_object()
+            serializer = self.get_serializer(enquiry_objs, data=request.data, partial=False)
 
             if not serializer.is_valid():
                 print(serializer.errors)
@@ -101,7 +101,7 @@ class StudentViewset(ModelViewSet):
             return Response({
                 'status':status.HTTP_200_OK,
                 'data': serializer.data,
-                'messaage':'Student detail updated successfully'
+                'messaage':'Enquiry detail updated successfully'
             })
 
         except Exception as e:
@@ -114,8 +114,8 @@ class StudentViewset(ModelViewSet):
     #update specific fields
     def partial_update(self,request, pk=None):
         try:
-            student_obj = self.get_object()
-            serializer = self.get_serializer(student_obj, data=request.data, partial = True)
+            enquiry_obj = self.get_object()
+            serializer = self.get_serializer(enquiry_obj, data=request.data, partial = True)
 
             if not serializer.is_valid():
                 print(serializer.errors)
@@ -129,7 +129,7 @@ class StudentViewset(ModelViewSet):
             return Response({
                 'status':status.HTTP_200_OK,
                 'data': serializer.data,
-                'messaage':'Student detail updated successfully'
+                'messaage':'Enquiry detail updated successfully'
             })
 
         except Exception as e:
@@ -139,15 +139,15 @@ class StudentViewset(ModelViewSet):
                 'status': APIException.status_code
             })
 
-    # delete student detail
+    # delete enquiry detail
     def destroy(self,request,pk):
         try:
             id = pk
-            student_obj = self.get_object()
-            student_obj.delete()
+            enquiry_obj = self.get_object()
+            enquiry_obj.delete()
             return Response({
                 'status':status.HTTP_200_OK,
-                'messaage':'Student detail deleted successfully'
+                'messaage':'Enquiry detail deleted successfully'
             })
 
         except Exception as e:
@@ -156,4 +156,5 @@ class StudentViewset(ModelViewSet):
                 'message':APIException.default_detail,
                 'status': APIException.status_code
             })
+
 

@@ -3,8 +3,8 @@ from django.core.validators import MaxValueValidator
 from branches.models import Branches
 
 # Create your models here.
-
 class Student(models.Model):
+    
     name = models.CharField(max_length=50)
     email = models.EmailField(max_length=254)
     contact = models.PositiveBigIntegerField()

@@ -1,7 +1,7 @@
 from django.shortcuts import render
-from .serializers import StudentSerializer
-from . models import Student
 from rest_framework.viewsets import ModelViewSet
+from .models import Batches
+from .serializers import BatchesSerializer
 from rest_framework import status
 from rest_framework.exceptions import APIException
 from rest_framework.response import Response
@@ -9,20 +9,20 @@ from rest_framework import permissions
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
 # Create your views here.
-class StudentViewset(ModelViewSet):
-    queryset = Student.objects.all()
-    serializer_class = StudentSerializer
+class BatchesViewSet(ModelViewSet):
+    queryset = Batches.objects.all()
+    serializer_class = BatchesSerializer
     authentication_classes = [JWTAuthentication]
     permission_classes = [permissions.IsAuthenticated]
 
     def get_serializer_class(self):
         return self.serializer_class
 
-    #get all student details
-    def list(self,request):
+    #get all batches
+    def list(self, request):
         try:
-            student_objs = Student.objects.all()
-            serializer = self.get_serializer(student_objs, many = True)
+            batches_objs = Batches.objects.all()
+            serializer = self.get_serializer(batches_objs, many = True)
 
             return Response({
                 'status':status.HTTP_200_OK,
@@ -36,10 +36,10 @@ class StudentViewset(ModelViewSet):
                 'status': APIException.status_code
             })
 
-    #add student detail
-    def create(self,request):
+    #add batches
+    def create(self, request):
         try:
-            serializer =self.get_serializer(data=request.data)
+            serializer = self.get_serializer(data=request.data)
 
             if not serializer.is_valid():
                 print(serializer.errors)
@@ -53,7 +53,7 @@ class StudentViewset(ModelViewSet):
             return Response({
                 'status':status.HTTP_201_CREATED,
                 'data': serializer.data,
-                'messaage':'Student detail added successfully'
+                'messaage':'Batch added successfully'
             })
 
         except Exception as e:
@@ -63,13 +63,13 @@ class StudentViewset(ModelViewSet):
                 'status': APIException.status_code
             })
 
-    # get single student detail
-    def retrieve(self,request,pk=None):
+    # get single batches
+    def retrieve(self, request, pk = None):
         try:
             id = pk
             if id is not None:
-                student_obj = self.get_object()
-                serializer = self.get_serializer(student_obj)
+                batches_obj = self.get_object()
+                serializer = self.get_serializer(batches_obj)
 
             return Response({
                 'status':status.HTTP_200_OK,
@@ -83,11 +83,12 @@ class StudentViewset(ModelViewSet):
                 'status': APIException.status_code
             })
 
-    #update all fields of student detail
-    def update(self,request,pk=None):
+    #update all fields of batch
+    def update(self, request, pk=None):
         try:
-            student_objs = self.get_object()
-            serializer = self.get_serializer(student_objs, data=request.data, partial=False)
+            
+            batches_obj = self.get_object()
+            serializer = self.get_serializer(batches_obj, data=request.data, partial=False)
 
             if not serializer.is_valid():
                 print(serializer.errors)
@@ -101,7 +102,7 @@ class StudentViewset(ModelViewSet):
             return Response({
                 'status':status.HTTP_200_OK,
                 'data': serializer.data,
-                'messaage':'Student detail updated successfully'
+                'messaage':'Batch updated successfully'
             })
 
         except Exception as e:
@@ -112,10 +113,11 @@ class StudentViewset(ModelViewSet):
             })
 
     #update specific fields
-    def partial_update(self,request, pk=None):
+    def partial_update(self, request, pk=None):
         try:
-            student_obj = self.get_object()
-            serializer = self.get_serializer(student_obj, data=request.data, partial = True)
+            
+            batches_objs = self.get_object()
+            serializer = self.get_serializer(batches_objs, data=request.data, partial = True)
 
             if not serializer.is_valid():
                 print(serializer.errors)
@@ -129,7 +131,7 @@ class StudentViewset(ModelViewSet):
             return Response({
                 'status':status.HTTP_200_OK,
                 'data': serializer.data,
-                'messaage':'Student detail updated successfully'
+                'messaage':'Batch updated successfully'
             })
 
         except Exception as e:
@@ -139,15 +141,15 @@ class StudentViewset(ModelViewSet):
                 'status': APIException.status_code
             })
 
-    # delete student detail
-    def destroy(self,request,pk):
+    # delete Batch
+    def destroy(self, request, pk):
         try:
-            id = pk
-            student_obj = self.get_object()
-            student_obj.delete()
+            id=pk
+            batches_obj = self.get_object()
+            batches_obj.delete()
             return Response({
                 'status':status.HTTP_200_OK,
-                'messaage':'Student detail deleted successfully'
+                'messaage':'Batch deleted successfully'
             })
 
         except Exception as e:
@@ -157,3 +159,4 @@ class StudentViewset(ModelViewSet):
                 'status': APIException.status_code
             })
 
+            

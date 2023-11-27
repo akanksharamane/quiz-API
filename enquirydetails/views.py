@@ -1,60 +1,57 @@
 from django.shortcuts import render
-from .serializers import ExamSerializer
-from . models import Exam
 from rest_framework.viewsets import ModelViewSet
-from rest_framework import status
-from rest_framework.exceptions import APIException
-from rest_framework.response import Response
+from .models import EnquiryModel
+from .serializers import EnquirySeriaizers
+from rest_framework import status 
+from rest_framework.exceptions import APIException 
+from rest_framework.response import Response 
 from rest_framework import permissions
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
-
 # Create your views here.
-class ExamViewset(ModelViewSet):
+
+class EnquiryViewSet(ModelViewSet):
     """
     API endpoint that allows Enquiries to be viewed or edited.
     """
-    queryset = Exam.objects.all()
-    serializer_class = ExamSerializer
+    queryset = EnquiryModel.objects.all()
+    serializer_class = EnquirySeriaizers
     authentication_classes = [JWTAuthentication]
     permission_classes = [permissions.IsAuthenticated]
-
+    
     def get_serializer_class(self):
         """
         Returns the serializer class to be used for this view set.
         """
         return self.serializer_class
-
-    #get all exam details
-    def list(self,request):
+    
+    def list(self, request):
         """
-        List all exam detail.
+        List all enquiries.
 
-        Returns a response containing a list of all exams.
+        Returns a response containing a list of all enquiries.
 
         Raises:
         - APIException: If an internal server error occurs.
         """
         try:
-            exam_objs = Exam.objects.all()
-            serializer = self.get_serializer(exam_objs, many = True)
+            enquiry_objs = EnquiryModel.objects.all()
+            serializer = self.get_serializer(enquiry_objs, many = True) 
 
             return Response({
-                'status':status.HTTP_200_OK,
+                'status': status.HTTP_200_OK,
                 'data': serializer.data
             })
-
         except Exception as e:
             print(e)
             raise APIException({
-                'message':APIException.default_detail,
+                'message': APIException.default_detail,
                 'status': APIException.status_code
             })
-
-    #add exam detail
-    def create(self,request):
+        
+    def create(self, request):
         """
-        Create new exam detail.
+        Create a new enquiry.
 
         Returns a response indicating the success or failure of the operation.
 
@@ -62,36 +59,32 @@ class ExamViewset(ModelViewSet):
         - APIException: If an internal server error occurs.
         """
         try:
-            serializer =self.get_serializer(data=request.data)
-
+            serializer = self.get_serializer(data = request.data)
             if not serializer.is_valid():
                 print(serializer.errors)
                 return Response({
-                    'status':status.HTTP_400_BAD_REQUEST,
+                    'status': status.HTTP_400_BAD_REQUEST,
                     'data': serializer.errors,
-                    'message':'Invalid data'
+                    'message': 'Invalid Data'
                 })
             serializer.save()
-
             return Response({
-                'status':status.HTTP_201_CREATED,
+                'status': status.HTTP_201_CREATED,
                 'data': serializer.data,
-                'messaage':'Exam detail added successfully'
+                'message': 'Enquiry added successfully'
             })
-
         except Exception as e:
             print(e)
             raise APIException({
-                'message':APIException.default_detail,
+                'message': APIException.default_detail,
                 'status': APIException.status_code
             })
 
-    # get single exam detail
-    def retrieve(self,request,pk=None):
+    def retrieve(self, request, pk=None):
         """
-        Retrieve details of a specific exam detail.
+        Retrieve details of a specific enquiry.
 
-        Returns a response containing details of the specified exam.
+        Returns a response containing details of the specified enquiry.
 
         Raises:
         - APIException: If an internal server error occurs.
@@ -99,25 +92,24 @@ class ExamViewset(ModelViewSet):
         try:
             id = pk
             if id is not None:
-                exam_obj = self.get_object()
-                serializer = self.get_serializer(exam_obj)
+                enquiry_objs = self.get_object()
+                serializer = self.get_serializer(enquiry_objs)
 
             return Response({
-                'status':status.HTTP_200_OK,
+                'status': status.HTTP_200_OK,
                 'data': serializer.data
             })
 
         except Exception as e:
             print(e)
             raise APIException({
-                'message':APIException.default_detail,
+                'message': APIException.default_detail,
                 'status': APIException.status_code
             })
 
-    #update all fields of exam detail
-    def update(self,request, pk=None):
+    def update(self, request, pk = None):
         """
-        Update all fields of an exam.
+        Update all fields of an enquiry.
 
         Returns a response indicating the success or failure of the operation.
 
@@ -125,35 +117,34 @@ class ExamViewset(ModelViewSet):
         - APIException: If an internal server error occurs.
         """
         try:
-            exam_objs = self.get_object()
-            serializer = self.get_serializer(exam_objs, data=request.data, partial=False)
+            enquiry_objs = self.get_object()
+            serializer = self.get_serializer(enquiry_objs, data = request.data, partial = False)
 
             if not serializer.is_valid():
                 print(serializer.errors)
                 return Response({
-                    'status':status.HTTP_400_BAD_REQUEST,
+                    'status': status.HTTP_400_BAD_REQUEST,
                     'data': serializer.errors,
-                    'message':'Invalid data'
+                    'message': 'Invalid data'
                 })
             serializer.save()
 
             return Response({
-                'status':status.HTTP_200_OK,
+                'status': status.HTTP_200_OK,
                 'data': serializer.data,
-                'messaage':'Exam detail updated successfully'
+                'message': 'Enquiry updated successfully'
             })
 
         except Exception as e:
             print(e)
             raise APIException({
-                'message':APIException.default_detail,
+                'message': APIException.default_detail,
                 'status': APIException.status_code
             })
 
-    #update specific fields
-    def partial_update(self,request, pk=None):
+    def partial_update(self, request, pk = None):
         """
-        Update specific fields of an exam detail.
+        Update specific fields of an enquiry.
 
         Returns a response indicating the success or failure of the operation.
 
@@ -161,35 +152,34 @@ class ExamViewset(ModelViewSet):
         - APIException: If an internal server error occurs.
         """
         try:
-            exam_obj = self.get_object()
-            serializer = self.get_serializer(exam_obj, data=request.data, partial = True)
+            enquiry_obj = self.get_object()
+            serializer = self.get_serializer(enquiry_obj, data = request.data, partial = True)
 
             if not serializer.is_valid():
                 print(serializer.errors)
                 return Response({
-                    'status':status.HTTP_400_BAD_REQUEST,
+                    'status': status.HTTP_400_BAD_REQUEST,
                     'data': serializer.errors,
-                    'message':'Invalid data'
+                    'message': 'Invalid data'
                 })
             serializer.save()
 
             return Response({
-                'status':status.HTTP_200_OK,
+                'status': status.HTTP_200_OK,
                 'data': serializer.data,
-                'messaage':'Exam detail updated successfully'
+                'message': 'Enquiry updated successfully'
             })
 
         except Exception as e:
             print(e)
             raise APIException({
-                'message':APIException.default_detail,
+                'message': APIException.default_detail,
                 'status': APIException.status_code
             })
 
-    # delete exam detail
-    def destroy(self, request,pk):
+    def destroy(self, request, pk):
         """
-        Delete an exam detail.
+        Delete an enquiry.
 
         Returns a response indicating the success or failure of the operation.
 
@@ -197,18 +187,17 @@ class ExamViewset(ModelViewSet):
         - APIException: If an internal server error occurs.
         """
         try:
-            id=pk
-            exam_obj = self.get_object()
-            exam_obj.delete()
+            id = pk
+            enquiry_objs = self.get_object()
+            enquiry_objs.delete()
             return Response({
-                'status':status.HTTP_200_OK,
-                'messaage':'Exam detail deleted successfully'
+                'status': status.HTTP_204_NO_CONTENT,
+                'message': 'Enquiry deleted successfully'
             })
 
         except Exception as e:
             print(e)
             raise APIException({
-                'message':APIException.default_detail,
+                'message': APIException.default_detail,
                 'status': APIException.status_code
             })
-
