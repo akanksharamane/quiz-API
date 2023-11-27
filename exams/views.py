@@ -11,25 +11,33 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 
 # Create your views here.
 class ExamViewset(ModelViewSet):
+    """
+    API endpoint that allows Enquiries to be viewed or edited.
+    """
     queryset = Exam.objects.all()
     serializer_class = ExamSerializer
     authentication_classes = [JWTAuthentication]
     permission_classes = [permissions.IsAuthenticated]
 
     def get_serializer_class(self):
-        # if self.action == 'list':
-        #     return AuthorSerializer
-        # if self.action == 'create':
-        #     return AuthorSerializer
-        # elif self.action == 'upload_image':
-        #     return AuthorImageSerializer
+        """
+        Returns the serializer class to be used for this view set.
+        """
         return self.serializer_class
 
     #get all exam details
     def list(self,request):
+        """
+        List all exam detail.
+
+        Returns a response containing a list of all exams.
+
+        Raises:
+        - APIException: If an internal server error occurs.
+        """
         try:
-            author_objs = Exam.objects.all()
-            serializer = self.get_serializer(author_objs, many = True)
+            exam_objs = Exam.objects.all()
+            serializer = self.get_serializer(exam_objs, many = True)
 
             return Response({
                 'status':status.HTTP_200_OK,
@@ -45,6 +53,14 @@ class ExamViewset(ModelViewSet):
 
     #add exam detail
     def create(self,request):
+        """
+        Create new exam detail.
+
+        Returns a response indicating the success or failure of the operation.
+
+        Raises:
+        - APIException: If an internal server error occurs.
+        """
         try:
             serializer =self.get_serializer(data=request.data)
 
@@ -72,6 +88,14 @@ class ExamViewset(ModelViewSet):
 
     # get single exam detail
     def retrieve(self,request,pk=None):
+        """
+        Retrieve details of a specific exam detail.
+
+        Returns a response containing details of the specified exam.
+
+        Raises:
+        - APIException: If an internal server error occurs.
+        """
         try:
             id = pk
             if id is not None:
@@ -92,10 +116,17 @@ class ExamViewset(ModelViewSet):
 
     #update all fields of exam detail
     def update(self,request, pk=None):
+        """
+        Update all fields of an exam.
+
+        Returns a response indicating the success or failure of the operation.
+
+        Raises:
+        - APIException: If an internal server error occurs.
+        """
         try:
-            #author_objs = Author.objects.all()
             exam_objs = self.get_object()
-            serializer = self.get_serializer(exam_objs,data=request.data, partial=False)
+            serializer = self.get_serializer(exam_objs, data=request.data, partial=False)
 
             if not serializer.is_valid():
                 print(serializer.errors)
@@ -121,10 +152,17 @@ class ExamViewset(ModelViewSet):
 
     #update specific fields
     def partial_update(self,request, pk=None):
+        """
+        Update specific fields of an exam detail.
+
+        Returns a response indicating the success or failure of the operation.
+
+        Raises:
+        - APIException: If an internal server error occurs.
+        """
         try:
-            #author_objs = Author.objects.all()
             exam_obj = self.get_object()
-            serializer = self.get_serializer(exam_obj,data=request.data,partial = True)
+            serializer = self.get_serializer(exam_obj, data=request.data, partial = True)
 
             if not serializer.is_valid():
                 print(serializer.errors)
@@ -150,10 +188,18 @@ class ExamViewset(ModelViewSet):
 
     # delete exam detail
     def destroy(self, request,pk):
+        """
+        Delete an exam detail.
+
+        Returns a response indicating the success or failure of the operation.
+
+        Raises:
+        - APIException: If an internal server error occurs.
+        """
         try:
             id=pk
-            author_obj = self.get_object()
-            author_obj.delete()
+            exam_obj = self.get_object()
+            exam_obj.delete()
             return Response({
                 'status':status.HTTP_200_OK,
                 'messaage':'Exam detail deleted successfully'

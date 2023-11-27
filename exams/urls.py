@@ -7,5 +7,5 @@ router.register('', ExamViewset, basename='exam')
 app_name ='exams'
 
 urlpatterns=[
-    path('',include(router.urls))
+    path('', include(router.urls))
 ]

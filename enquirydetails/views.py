@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework.viewsets import ModelViewSet
-from .models import Enquiry
-from .serializers import EnquirySeriaizer
+from .models import EnquiryModel
+from .serializers import EnquirySeriaizers
 from rest_framework import status 
 from rest_framework.exceptions import APIException 
 from rest_framework.response import Response 
@@ -14,8 +14,8 @@ class EnquiryViewSet(ModelViewSet):
     """
     API endpoint that allows Enquiries to be viewed or edited.
     """
-    queryset = Enquiry.objects.all()
-    serializer_class = EnquirySeriaizer
+    queryset = EnquiryModel.objects.all()
+    serializer_class = EnquirySeriaizers
     authentication_classes = [JWTAuthentication]
     permission_classes = [permissions.IsAuthenticated]
     
@@ -35,7 +35,7 @@ class EnquiryViewSet(ModelViewSet):
         - APIException: If an internal server error occurs.
         """
         try:
-            enquiry_objs = Enquiry.objects.all()
+            enquiry_objs = EnquiryModel.objects.all()
             serializer = self.get_serializer(enquiry_objs, many = True) 
 
             return Response({
@@ -71,7 +71,7 @@ class EnquiryViewSet(ModelViewSet):
             return Response({
                 'status': status.HTTP_201_CREATED,
                 'data': serializer.data,
-                'message': 'Voucher added successfully'
+                'message': 'Enquiry added successfully'
             })
         except Exception as e:
             print(e)
@@ -132,7 +132,7 @@ class EnquiryViewSet(ModelViewSet):
             return Response({
                 'status': status.HTTP_200_OK,
                 'data': serializer.data,
-                'message': 'Voucher updated successfully'
+                'message': 'Enquiry updated successfully'
             })
 
         except Exception as e:
@@ -152,8 +152,8 @@ class EnquiryViewSet(ModelViewSet):
         - APIException: If an internal server error occurs.
         """
         try:
-            voucher_obj = self.get_object()
-            serializer = self.get_serializer(voucher_obj, data = request.data, partial = True)
+            enquiry_obj = self.get_object()
+            serializer = self.get_serializer(enquiry_obj, data = request.data, partial = True)
 
             if not serializer.is_valid():
                 print(serializer.errors)
@@ -167,7 +167,7 @@ class EnquiryViewSet(ModelViewSet):
             return Response({
                 'status': status.HTTP_200_OK,
                 'data': serializer.data,
-                'message': 'Voucher updated successfully'
+                'message': 'Enquiry updated successfully'
             })
 
         except Exception as e:
@@ -192,7 +192,7 @@ class EnquiryViewSet(ModelViewSet):
             enquiry_objs.delete()
             return Response({
                 'status': status.HTTP_204_NO_CONTENT,
-                'message': 'Voucher deleted successfully'
+                'message': 'Enquiry deleted successfully'
             })
 
         except Exception as e:

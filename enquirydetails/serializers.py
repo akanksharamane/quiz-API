@@ -1,10 +1,10 @@
 from rest_framework  import serializers
-from .models import Enquiry
+from .models import EnquiryModel
 
-class EnquirySeriaizer(serializers.ModelSerializer):
+class EnquirySeriaizers(serializers.ModelSerializer):
     
     class Meta:
-        model = Enquiry
+        model = EnquiryModel
         fields ='__all__'
         read_only_fields = ['id']
         
