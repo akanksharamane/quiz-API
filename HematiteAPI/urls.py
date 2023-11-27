@@ -54,6 +54,7 @@ urlpatterns = [
     path('api/exam/', include('exams.urls')),
     path('api/questions/', include('questions.urls')),
     path('api/students/', include('students.urls')),
+    path('api/enquiry/', include('enquiry.urls')),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     path('api/token/',swagger_auto_schema(methods=['post'],security=[])(TokenObtainPairView.as_view())),

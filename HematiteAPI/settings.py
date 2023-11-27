@@ -56,7 +56,8 @@ INSTALLED_APPS = [
     'exams',
     'batches',
     'questions',
-    'students'
+    'students',
+    'enquiry'
 ]
 
 MIDDLEWARE = [
