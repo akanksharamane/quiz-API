@@ -15,14 +15,13 @@ class FeedbacksViewSet(ModelViewSet):
     authentication_classes=[JWTAuthentication]
     permission_classes=[permissions.IsAuthenticated]
 
-
     def get_serializer_class(self):
         return self.serializer_class
 
-    #get all Feedback
+    #get all feedback
     def list(self, request):
         try:
-            feedbacks_objs = Feedbacks.objects.all()
+            feedbacks_objs = Feedback.objects.all()
             serializer = self.get_serializer(feedbacks_objs, many = True)
 
             return Response({
@@ -37,7 +36,7 @@ class FeedbacksViewSet(ModelViewSet):
                 'status': APIException.status_code
             })
 
-    #add Feedback
+    #add feedback
     def create(self, request):
         try:
             serializer = self.get_serializer(data=request.data)
@@ -54,7 +53,7 @@ class FeedbacksViewSet(ModelViewSet):
             return Response({
                 'status':status.HTTP_201_CREATED,
                 'data': serializer.data,
-                'messaage':'feedback added successfully'
+                'messaage':'Feedback added successfully'
             })
 
         except Exception as e:
@@ -64,7 +63,7 @@ class FeedbacksViewSet(ModelViewSet):
                 'status': APIException.status_code
             })
 
-    # get single Feedback
+    # get single feedback
     def retrieve(self, request, pk = None):
         try:
             id = pk
@@ -89,7 +88,7 @@ class FeedbacksViewSet(ModelViewSet):
         try:
             
             feedbacks_obj = self.get_object()
-            serializer = self.get_serializer(feedbacks_obj,data=request.data, partial=False)
+            serializer = self.get_serializer(feedbacks_obj, data=request.data, partial=False)
 
             if not serializer.is_valid():
                 print(serializer.errors)
@@ -103,7 +102,7 @@ class FeedbacksViewSet(ModelViewSet):
             return Response({
                 'status':status.HTTP_200_OK,
                 'data': serializer.data,
-                'messaage':'feedback updated successfully'
+                'messaage':'Feedback updated successfully'
             })
 
         except Exception as e:
@@ -114,12 +113,11 @@ class FeedbacksViewSet(ModelViewSet):
             })
 
     #update specific fields
-
     def partial_update(self, request, pk=None):
         try:
             
             feedbacks_objs = self.get_object()
-            serializer = self.get_serializer(feedbacks_objs,data=request.data,partial = True)
+            serializer = self.get_serializer(feedbacks_objs, data=request.data, partial = True)
 
             if not serializer.is_valid():
                 print(serializer.errors)
@@ -133,7 +131,7 @@ class FeedbacksViewSet(ModelViewSet):
             return Response({
                 'status':status.HTTP_200_OK,
                 'data': serializer.data,
-                'messaage':'feedback updated successfully'
+                'messaage':'Feedback updated successfully'
             })
 
         except Exception as e:
@@ -143,10 +141,10 @@ class FeedbacksViewSet(ModelViewSet):
                 'status': APIException.status_code
             })
 
-    # delete Course
+    # delete feedback
     def destroy(self, request, pk):
         try:
-            id=pk
+            id = pk
             feedbacks_obj = self.get_object()
             feedbacks_obj.delete()
             return Response({
