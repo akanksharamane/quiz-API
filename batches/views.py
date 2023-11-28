@@ -10,6 +10,9 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 
 # Create your views here.
 class BatchesViewSet(ModelViewSet):
+    """
+    API endpoint that allows Batches to be viewed or edited.
+    """
     queryset = Batches.objects.all()
     serializer_class = BatchesSerializer
     authentication_classes = [JWTAuthentication]
@@ -20,6 +23,14 @@ class BatchesViewSet(ModelViewSet):
 
     #get all batches
     def list(self, request):
+        """
+        List all batches.
+
+        Returns a response containing a list of all batches.
+
+        Raises:
+        - APIException: If an internal server error occurs.
+        """
         try:
             batches_objs = Batches.objects.all()
             serializer = self.get_serializer(batches_objs, many = True)
@@ -38,6 +49,14 @@ class BatchesViewSet(ModelViewSet):
 
     #add batches
     def create(self, request):
+        """
+        Create a new batch.
+
+        Returns a response indicating the success or failure of the operation.
+
+        Raises:
+        - APIException: If an internal server error occurs.
+        """
         try:
             serializer = self.get_serializer(data=request.data)
 
@@ -65,6 +84,14 @@ class BatchesViewSet(ModelViewSet):
 
     # get single batches
     def retrieve(self, request, pk = None):
+        """
+        Retrieve details of a specific batch.
+
+        Returns a response containing details of the specified batch.
+
+        Raises:
+        - APIException: If an internal server error occurs.
+        """
         try:
             id = pk
             if id is not None:
@@ -85,6 +112,14 @@ class BatchesViewSet(ModelViewSet):
 
     #update all fields of batch
     def update(self, request, pk=None):
+        """
+        Update all fields of a batch.
+
+        Returns a response indicating the success or failure of the operation.
+
+        Raises:
+        - APIException: If an internal server error occurs.
+        """
         try:
             
             batches_obj = self.get_object()
@@ -114,6 +149,14 @@ class BatchesViewSet(ModelViewSet):
 
     #update specific fields
     def partial_update(self, request, pk=None):
+        """
+        Update specific fields of a batch.
+
+        Returns a response indicating the success or failure of the operation.
+
+        Raises:
+        - APIException: If an internal server error occurs.
+        """
         try:
             
             batches_objs = self.get_object()
@@ -141,8 +184,16 @@ class BatchesViewSet(ModelViewSet):
                 'status': APIException.status_code
             })
 
-    # delete Batch
+    # delete batch
     def destroy(self, request, pk):
+        """
+        Delete a batch.
+
+        Returns a response indicating the success or failure of the operation.
+
+        Raises:
+        - APIException: If an internal server error occurs.
+        """
         try:
             id=pk
             batches_obj = self.get_object()

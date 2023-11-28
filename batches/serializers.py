@@ -9,8 +9,8 @@ class BatchesSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Batches
-        fields=['courseId_id', 'courseId', 'batchType', 'startDate', 'startDate', 'seatAvailable', 'duration', 'batchStatus']
-        read_only_fields=['id']
+        fields = ['courseId_id', 'courseId', 'batchType', 'startDate', 'startDate', 'seatAvailable', 'duration', 'batchStatus']
+        read_only_fields = ['id']
 
     #add custom validator
     def validate(self, data):

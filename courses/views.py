@@ -10,6 +10,9 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 
 # Create your views here.
 class CoursesViewSet(ModelViewSet):
+    """
+    API endpoint that allows Courses to be viewed or edited.
+    """
     queryset=Courses.objects.all()
     serializer_class=CoursesSerializer
     authentication_classes=[JWTAuthentication]
@@ -17,16 +20,18 @@ class CoursesViewSet(ModelViewSet):
 
 
     def get_serializer_class(self):
-        # if self.action == 'list':
-        #     return AuthorSerializer
-        # elif self.action == 'create':
-        #     return AuthorSerializer
-        # elif self.action == 'upload_image':
-        #     return AuthorImageSerializer
         return self.serializer_class
 
     #get all Courses
     def list(self, request):
+        """
+        List all courses.
+
+        Returns a response containing a list of all courses.
+
+        Raises:
+        - APIException: If an internal server error occurs.
+        """
         try:
             courses_objs = Courses.objects.all()
             serializer = self.get_serializer(courses_objs, many = True)
@@ -45,6 +50,14 @@ class CoursesViewSet(ModelViewSet):
 
     #add Courses
     def create(self, request):
+        """
+        Create a new course.
+
+        Returns a response indicating the success or failure of the operation.
+
+        Raises:
+        - APIException: If an internal server error occurs.
+        """
         try:
             serializer = self.get_serializer(data=request.data)
 
@@ -72,6 +85,14 @@ class CoursesViewSet(ModelViewSet):
 
     # get single Course
     def retrieve(self, request, pk = None):
+        """
+        Retrieve details of a specific course.
+
+        Returns a response containing details of the specified course.
+
+        Raises:
+        - APIException: If an internal server error occurs.
+        """
         try:
             id = pk
             if id is not None:
@@ -92,6 +113,14 @@ class CoursesViewSet(ModelViewSet):
 
     #update all fields of Course
     def update(self, request, pk=None):
+        """
+        Update all fields of a course.
+
+        Returns a response indicating the success or failure of the operation.
+
+        Raises:
+        - APIException: If an internal server error occurs.
+        """
         try:
             
             courses_obj = self.get_object()
@@ -122,6 +151,14 @@ class CoursesViewSet(ModelViewSet):
     #update specific fields
 
     def partial_update(self, request, pk=None):
+        """
+        Update specific fields of a course.
+
+        Returns a response indicating the success or failure of the operation.
+
+        Raises:
+        - APIException: If an internal server error occurs.
+        """
         try:
             
             courses_objs = self.get_object()
@@ -150,7 +187,15 @@ class CoursesViewSet(ModelViewSet):
             })
 
     # delete Course
-    def destroy(self, request ,pk):
+    def destroy(self, request, pk):
+        """
+        Delete a course.
+
+        Returns a response indicating the success or failure of the operation.
+
+        Raises:
+        - APIException: If an internal server error occurs.
+        """
         try:
             id=pk
             courses_obj = self.get_object()

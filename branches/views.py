@@ -10,16 +10,27 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 
 # Create your views here.
 class BranchesViewSet(ModelViewSet):
-    queryset=Branches.objects.all()
-    serializer_class=BranchesSerializer
-    authentication_classes=[JWTAuthentication]
-    permission_classes=[permissions.IsAuthenticated]
+    """
+    API endpoint that allows Branches to be viewed or edited.
+    """
+    queryset = Branches.objects.all()
+    serializer_class = BranchesSerializer
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
 
     def get_serializer_class(self):
         return self.serializer_class
 
     #get all Branches
     def list(self, request):
+        """
+        List all branches.
+
+        Returns a response containing a list of all branches.
+
+        Raises:
+        - APIException: If an internal server error occurs.
+        """
         try:
             branches_objs = Branches.objects.all()
             serializer = self.get_serializer(branches_objs, many = True)
@@ -38,6 +49,14 @@ class BranchesViewSet(ModelViewSet):
 
     #add Branches
     def create(self, request):
+        """
+        Create a new branch.
+
+        Returns a response indicating the success or failure of the operation.
+
+        Raises:
+        - APIException: If an internal server error occurs.
+        """
         try:
             serializer = self.get_serializer(data=request.data)
 
@@ -65,6 +84,14 @@ class BranchesViewSet(ModelViewSet):
 
     # get single branch
     def retrieve(self, request, pk = None):
+        """
+        Retrieve details of a specific branch.
+
+        Returns a response containing details of the specified branch.
+
+        Raises:
+        - APIException: If an internal server error occurs.
+        """
         try:
             id = pk
             if id is not None:
@@ -85,6 +112,14 @@ class BranchesViewSet(ModelViewSet):
 
     #update all fields of branch
     def update(self, request, pk=None):
+        """
+        Update all fields of a branch.
+
+        Returns a response indicating the success or failure of the operation.
+
+        Raises:
+        - APIException: If an internal server error occurs.
+        """
         try:
             
             branches_obj = self.get_object()
@@ -115,6 +150,14 @@ class BranchesViewSet(ModelViewSet):
     #update specific fields
 
     def partial_update(self, request, pk=None):
+        """
+        Update specific fields of a branch.
+
+        Returns a response indicating the success or failure of the operation.
+
+        Raises:
+        - APIException: If an internal server error occurs.
+        """
         try:
             
             branches_objs = self.get_object()
@@ -144,6 +187,14 @@ class BranchesViewSet(ModelViewSet):
 
     # delete Branch
     def destroy(self, request, pk):
+        """
+        Delete a branch.
+
+        Returns a response indicating the success or failure of the operation.
+
+        Raises:
+        - APIException: If an internal server error occurs.
+        """
         try:
             id=pk
             branches_obj = self.get_object()

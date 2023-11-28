@@ -10,6 +10,9 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 
 # Create your views here.
 class EnquiryViewset(ModelViewSet):
+    """
+    API endpoint that allows Enquiry to be viewed or edited.
+    """
     queryset = Enquiry.objects.all()
     serializer_class = EnquirySerializer
     authentication_classes = [JWTAuthentication]
@@ -20,6 +23,14 @@ class EnquiryViewset(ModelViewSet):
 
     #get all enquiry details
     def list(self,request):
+        """
+        List all enquiries.
+
+        Returns a response containing a list of all enquiries.
+
+        Raises:
+        - APIException: If an internal server error occurs.
+        """
         try:
             enquiry_objs = Enquiry.objects.all()
             serializer = self.get_serializer(enquiry_objs, many = True)
@@ -38,6 +49,14 @@ class EnquiryViewset(ModelViewSet):
 
     #add enquiry detail
     def create(self,request):
+        """
+        Create a new enquiry.
+
+        Returns a response indicating the success or failure of the operation.
+
+        Raises:
+        - APIException: If an internal server error occurs.
+        """
         try:
             serializer =self.get_serializer(data=request.data)
 
@@ -65,6 +84,14 @@ class EnquiryViewset(ModelViewSet):
 
     # get single enquiry detail
     def retrieve(self,request,pk=None):
+        """
+        Retrieve details of a specific enquiry.
+
+        Returns a response containing details of the specified enquiry.
+
+        Raises:
+        - APIException: If an internal server error occurs.
+        """
         try:
             id = pk
             if id is not None:
@@ -85,6 +112,14 @@ class EnquiryViewset(ModelViewSet):
 
     #update all fields of enquiry detail
     def update(self,request,pk=None):
+        """
+        Update all fields of an enquiry.
+
+        Returns a response indicating the success or failure of the operation.
+
+        Raises:
+        - APIException: If an internal server error occurs.
+        """
         try:
             enquiry_objs = self.get_object()
             serializer = self.get_serializer(enquiry_objs, data=request.data, partial=False)
@@ -113,6 +148,14 @@ class EnquiryViewset(ModelViewSet):
 
     #update specific fields
     def partial_update(self,request, pk=None):
+        """
+        Update specific fields of an enquiry.
+
+        Returns a response indicating the success or failure of the operation.
+
+        Raises:
+        - APIException: If an internal server error occurs.
+        """
         try:
             enquiry_obj = self.get_object()
             serializer = self.get_serializer(enquiry_obj, data=request.data, partial = True)
@@ -141,6 +184,14 @@ class EnquiryViewset(ModelViewSet):
 
     # delete enquiry detail
     def destroy(self,request,pk):
+        """
+        Delete an enquiry.
+
+        Returns a response indicating the success or failure of the operation.
+
+        Raises:
+        - APIException: If an internal server error occurs.
+        """
         try:
             id = pk
             enquiry_obj = self.get_object()

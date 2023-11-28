@@ -11,6 +11,9 @@ from rest_framework.decorators import action
 
 # Create your views here.
 class QuestionViewset(ModelViewSet):
+    """
+    API endpoint that allows Questions to be viewed or edited.
+    """
     queryset = Question.objects.all()
     serializer_class = QuestionDetailSerializer
     authentication_classes = [JWTAuthentication]
@@ -26,8 +29,16 @@ class QuestionViewset(ModelViewSet):
             return QuestionImageSerializer
         return self.serializer_class
 
-    @action(methods=['POST'],detail=True,url_path='upload-image')
+    @action(methods=['POST'], detail=True, url_path ='upload-image')
     def upload_image(self, request, pk=None):
+        """
+        Upload the image of a question.
+
+        Returns a response containing a file of an image.
+
+        Raises:
+        - APIException: If an internal server error occurs.
+        """
 
         question_objs = self.get_object()
         serializer = self.get_serializer(question_objs, data=request.data)
@@ -48,6 +59,14 @@ class QuestionViewset(ModelViewSet):
 
     #get all questions
     def list(self, request):
+        """
+        List all questions.
+
+        Returns a response containing a list of all questions.
+
+        Raises:
+        - APIException: If an internal server error occurs.
+        """
         try:
             question_objs = Question.objects.all()
             serializer = self.get_serializer(question_objs, many=True)
@@ -66,6 +85,14 @@ class QuestionViewset(ModelViewSet):
 
     #add question
     def create(self, request):
+        """
+        Create a new question.
+
+        Returns a response indicating the success or failure of the operation.
+
+        Raises:
+        - APIException: If an internal server error occurs.
+        """
         try:
             serializer = self.get_serializer(data=request.data)
 
@@ -93,6 +120,14 @@ class QuestionViewset(ModelViewSet):
 
     # get single question
     def retrieve(self, request, pk=None):
+        """
+        Retrieve details of a specific question.
+
+        Returns a response containing details of the specified question.
+
+        Raises:
+        - APIException: If an internal server error occurs.
+        """
         try:
             id = pk
             if id is not None:
@@ -113,6 +148,14 @@ class QuestionViewset(ModelViewSet):
 
     #update all fields of question
     def update(self, request, pk=None):
+        """
+        Update all fields of a question.
+
+        Returns a response indicating the success or failure of the operation.
+
+        Raises:
+        - APIException: If an internal server error occurs.
+        """
         try:
             question_objs = self.get_object()
             serializer = self.get_serializer(question_objs, data=request.data, partial=False)
@@ -141,6 +184,14 @@ class QuestionViewset(ModelViewSet):
 
     #update specific fields
     def partial_update(self, request, pk=None):
+        """
+        Update specific fields of a question.
+
+        Returns a response indicating the success or failure of the operation.
+
+        Raises:
+        - APIException: If an internal server error occurs.
+        """
         try:
             question_objs = self.get_object()
             serializer = self.get_serializer(question_objs, data=request.data, partial=True)
@@ -168,6 +219,14 @@ class QuestionViewset(ModelViewSet):
             })
 
     def destroy(self, request, pk):
+        """
+        Delete a question.
+
+        Returns a response indicating the success or failure of the operation.
+
+        Raises:
+        - APIException: If an internal server error occurs.
+        """
         try:
             id = pk
             question_obj = self.get_object()

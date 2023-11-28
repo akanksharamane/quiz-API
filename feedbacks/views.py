@@ -10,16 +10,27 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 
 # Create your views here.
 class FeedbacksViewSet(ModelViewSet):
-    queryset=Feedback.objects.all()
-    serializer_class=FeedbacksSerializer
-    authentication_classes=[JWTAuthentication]
-    permission_classes=[permissions.IsAuthenticated]
+    """
+    API endpoint that allows Feedback to be viewed or edited.
+    """
+    queryset = Feedback.objects.all()
+    serializer_class = FeedbacksSerializer
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
 
     def get_serializer_class(self):
         return self.serializer_class
 
     #get all feedback
     def list(self, request):
+        """
+        List all feedbacks.
+
+        Returns a response containing a list of all feedbacks.
+
+        Raises:
+        - APIException: If an internal server error occurs.
+        """
         try:
             feedbacks_objs = Feedback.objects.all()
             serializer = self.get_serializer(feedbacks_objs, many = True)
@@ -38,6 +49,14 @@ class FeedbacksViewSet(ModelViewSet):
 
     #add feedback
     def create(self, request):
+        """
+        Create a new feedback.
+
+        Returns a response indicating the success or failure of the operation.
+
+        Raises:
+        - APIException: If an internal server error occurs.
+        """
         try:
             serializer = self.get_serializer(data=request.data)
 
@@ -65,6 +84,14 @@ class FeedbacksViewSet(ModelViewSet):
 
     # get single feedback
     def retrieve(self, request, pk = None):
+        """
+        Retrieve details of a specific feedback.
+
+        Returns a response containing details of the specified feedback.
+
+        Raises:
+        - APIException: If an internal server error occurs.
+        """
         try:
             id = pk
             if id is not None:
@@ -85,6 +112,14 @@ class FeedbacksViewSet(ModelViewSet):
 
     #update all fields of feedback
     def update(self, request, pk=None):
+        """
+        Update all fields of a feedback.
+
+        Returns a response indicating the success or failure of the operation.
+
+        Raises:
+        - APIException: If an internal server error occurs.
+        """
         try:
             
             feedbacks_obj = self.get_object()
@@ -114,6 +149,14 @@ class FeedbacksViewSet(ModelViewSet):
 
     #update specific fields
     def partial_update(self, request, pk=None):
+        """
+        Update specific fields of a feedback.
+
+        Returns a response indicating the success or failure of the operation.
+
+        Raises:
+        - APIException: If an internal server error occurs.
+        """
         try:
             
             feedbacks_objs = self.get_object()
@@ -143,6 +186,14 @@ class FeedbacksViewSet(ModelViewSet):
 
     # delete feedback
     def destroy(self, request, pk):
+        """
+        Delete a feedback.
+
+        Returns a response indicating the success or failure of the operation.
+
+        Raises:
+        - APIException: If an internal server error occurs.
+        """
         try:
             id = pk
             feedbacks_obj = self.get_object()

@@ -8,7 +8,7 @@ class FeedbacksSerializer(serializers.ModelSerializer):
     branch = BranchesSerializer(read_only=True)
 
     class Meta:
-        model=Feedback
+        model = Feedback
         fields = ['name','email','contact','branch_id','branch','answer1']
         read_only_fields = ['id']
 

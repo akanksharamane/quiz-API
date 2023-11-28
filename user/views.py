@@ -35,7 +35,6 @@ class RegisterUserAPIView(APIView):
         serializer.save()
         return Response({
             'status':status.HTTP_201_CREATED,
-            # 'data':serializer.data,
             'message':'User added successfully'
         })
 

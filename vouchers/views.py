@@ -22,9 +22,9 @@ class VoucherViewSet(ModelViewSet):
     
     def list(self, request):
         """
-        List all vouchers.
+        List all voucher codes.
 
-        Returns a response containing a list of all vouchers.
+        Returns a response containing a list of all voucher codes.
 
         Raises:
         - APIException: If an internal server error occurs.
@@ -46,7 +46,7 @@ class VoucherViewSet(ModelViewSet):
         
     def create(self, request):
         """
-        Create a new voucher.
+        Create a new voucher code.
 
         Returns a response indicating the success or failure of the operation.
 
@@ -66,7 +66,7 @@ class VoucherViewSet(ModelViewSet):
             return Response({
                 'status': status.HTTP_201_CREATED,
                 'data': serializer.data,
-                'message': 'Voucher added successfully'
+                'message': 'Voucher code added successfully'
             })
         except Exception as e:
             print(e)
@@ -77,9 +77,9 @@ class VoucherViewSet(ModelViewSet):
 
     def retrieve(self, request, pk=None):
         """
-        Retrieve details of a specific voucher.
+        Retrieve details of a specific voucher code.
 
-        Returns a response containing details of the specified voucher.
+        Returns a response containing details of the specified voucher code.
 
         Raises:
         - APIException: If an internal server error occurs.
@@ -104,7 +104,7 @@ class VoucherViewSet(ModelViewSet):
 
     def update(self, request, pk=None):
         """
-        Update all fields of a voucher.
+        Update all fields of a voucher code.
 
         Returns a response indicating the success or failure of the operation.
 
@@ -127,7 +127,7 @@ class VoucherViewSet(ModelViewSet):
             return Response({
                 'status': status.HTTP_200_OK,
                 'data': serializer.data,
-                'message': 'Voucher updated successfully'
+                'message': 'Voucher code updated successfully'
             })
 
         except Exception as e:
@@ -139,7 +139,7 @@ class VoucherViewSet(ModelViewSet):
 
     def partial_update(self, request, pk = None):
         """
-        Update specific fields of a voucher.
+        Update specific fields of a voucher code.
 
         Returns a response indicating the success or failure of the operation.
 
@@ -162,7 +162,7 @@ class VoucherViewSet(ModelViewSet):
             return Response({
                 'status': status.HTTP_200_OK,
                 'data': serializer.data,
-                'message': 'Voucher updated successfully'
+                'message': 'Voucher code updated successfully'
             })
 
         except Exception as e:
@@ -174,7 +174,7 @@ class VoucherViewSet(ModelViewSet):
 
     def destroy(self, request, pk):
         """
-        Delete a voucher.
+        Delete a voucher code.
 
         Returns a response indicating the success or failure of the operation.
 
@@ -187,7 +187,7 @@ class VoucherViewSet(ModelViewSet):
             voucher_obj.delete()
             return Response({
                 'status': status.HTTP_204_NO_CONTENT,
-                'message': 'Voucher deleted successfully'
+                'message': 'Voucher code deleted successfully'
             })
 
         except Exception as e:
